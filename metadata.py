@@ -2,8 +2,8 @@
 
 import os
 import yaml
-import settings
 import shutil
+from . import settings
 
 
 class CAFile(object):
@@ -45,17 +45,38 @@ class CAFile(object):
 
         """
 
-        cafile_path = os.path.join(dir_path,settings.CAFILE_NAME)
+        #: str: The location to the directory containing the cafile.yml loaded
+        self._dir_path = dir_path
+        #: dict: A dictionary containing the cafile.yml data
+        self._data = self.load_file()
+
+    def load_file(self):
+        cafile_path = os.path.join(self._dir_path,settings.CAFILE_NAME)
         with open(cafile_path) as cafile:
-            #: dict: A dictionary containing the cafile.yml data
-            self._data = yaml.load(cafile)
-            #: str: The location to the directory containing the cafile.yml loaded
-            self._dir_path = dir_path
+            return yaml.load(cafile)
+
+    def refresh(self):
+        self._data = self.load_file()
+
+    def update(self,data):
+        file_path = os.path.join(self._dir_path,settings.CAFILE_NAME)
+        with open(file_path,'w') as outfile:
+            yaml.dump(data,outfile)
+            self.refresh()
 
     @property
     def data(self):
         """Returns a dict with the cafile object data."""
         return self._data
+
+    @property
+    def pattern_name(self):
+        return self._data['pattern_name']
+
+    def exists(self):
+        file_path = os.path.join(self._dir_path,settings.CAFILE_NAME)
+        return os.path.exists(file_path)
+
 
     def __str__(self):
         """Returns a string with the cafile object data."""

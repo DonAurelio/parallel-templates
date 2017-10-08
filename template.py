@@ -13,8 +13,9 @@ http://stackoverflow.com/questions/11306669/django-template-escaping
 """
 
 import os
-import settings
 from django import template
+from . import settings
+
 
 class CATemplate(object):
 
