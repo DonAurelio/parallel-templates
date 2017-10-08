@@ -1,0 +1,14 @@
+# The fields described here are mandatory to serve as a context
+# to a cellular automata template.c
+pattern: stencil
+lattice: 
+    rowdim: 20
+    coldim: 20
+    type: bool
+    neighborhood:
+        up: [-1,1]
+        down: [1,1]
+        left: [1,1]
+        right: [-1,-1]
+
+generations: 20
