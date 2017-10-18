@@ -19,7 +19,7 @@ from . import settings
 
 class CATemplate(object):
 
-    def __init__(self,patten_name):
+    def __init__(self,cafile):
         """Cellular automata template class.
 
         Manage all templates located in settings.TEMPLATE_DIRS. Allows
@@ -36,16 +36,17 @@ class CATemplate(object):
 
         """
 
-        #: str: The name of the cellular automata programming pattern required
-        self._pattern_name = patten_name
+        #: str: an instance of CAFile which content additional data for template rendering
+        self._cafile = cafile
+
         #: str: A path, the unique location to the file
-        self._file_path = os.path.join(patten_name,settings.TEMPLATE_NAME)
+        self._file_path = os.path.join(cafile.pattern_name,settings.TEMPLATE_NAME)
 
         engine = template.engine.Engine(dirs=settings.TEMPLATE_DIRS)
         #: Django Template:  Template corresponding to the selected pattern
         self._template = engine.get_template(self._file_path)
 
-    def render(self,cafile):
+    def render(self):
         """Render the template given a cafile instance.
 
         Args:
@@ -55,10 +56,10 @@ class CATemplate(object):
             An string with a rendered C99 raw code.
 
         """
-        cafile_dict = cafile.data
+        cafile_dict = self._cafile.data
         return self._template.render(template.Context(cafile_dict))
 
-    def render_to_file(self,cafile,dir_path):
+    def render_to_file(self,dir_path):
         """Render the template, but the output is a dir_path.
 
 
@@ -76,10 +77,10 @@ class CATemplate(object):
 
         """
 
-        file_name = self._pattern_name + '.c'
+        file_name = self._cafile.pattern_name + '.c'
         file_path = os.path.join(dir_path,file_name)
         with open(file_path,'w') as codefile:
-            raw_code = self.render(cafile)
+            raw_code = self.render()
             codefile.write(raw_code)
 
         return file_path
