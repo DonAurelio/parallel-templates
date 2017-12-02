@@ -7,13 +7,14 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Templates Folder Manager Settings
-# Register your templates here
-
 TEMPLATE_DIRS = (
 	os.path.join(BASE_DIR,'templates'),
 )
 
 TEMPLATE_FILE_NAME = 'template.c'
+
+# Parallel File Settings
+PARALLEL_FILE_NAME = 'parallel.yml'
 
 # # Cellular Automata Specification File Settings
 # CAFILE_NAME = 'cafile.yml'

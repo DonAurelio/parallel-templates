@@ -17,12 +17,17 @@ if __name__ == '__main__':
         os.mkdir(TEST_DIR)
 
     print('CATT Available Templates')
-    template_manager = manager.TemplateManager()
+    template_manager = manager.TemplateFolderManager()
     available_templates_list = template_manager.list_available_templates()
     print(available_templates_list)
 
     print('CATT Get a Template')
-    template_manager.get_template('stencil')
+    template = template_manager.get_template('stencil')
+    print(template)
+
+    print('CATT Get Template Info')
+    info = template_manager.get_template_info('stencil')
+    print(info)
 
 
     # print('Cellular Automata Template Metadata')
