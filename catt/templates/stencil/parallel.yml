@@ -1,4 +1,3 @@
-resource: 'template'
 name: 'stencil'
 description: |
     Linealized matrix template with stencil parallel programming pattern.

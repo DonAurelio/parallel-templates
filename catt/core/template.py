@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 """
 References:
 [1] Working without settings with django template engine 

@@ -9,6 +9,14 @@ from . import settings
 class CAFile(object):
 
     @staticmethod
+    def syntax_example():
+        """Returns a string with the available syntax for a cafile.yml."""
+
+        cafile_path = settings.CAFILE_PATH
+        with open(cafile_path) as cafile:
+            return cafile.read()
+
+    @staticmethod
     def create_file(dir_path):
         """Create cafile.
 
@@ -82,3 +90,8 @@ class CAFile(object):
         """Returns a string with the cafile object data."""
         raw = 'Directory: %s \nData: \n%s'
         return raw % (self._dir_path,str(self._data))
+
+
+class Parallel(object):
+
+    
