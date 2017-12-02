@@ -85,7 +85,3 @@ class TemplateFolderManager(object):
         info = manager.get_file_info(template_name)
 
         return info
-
-     # ?¿
-    def get_template_content(template_name):
-        pass
