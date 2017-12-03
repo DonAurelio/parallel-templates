@@ -38,17 +38,11 @@ class TemplateFileManager(object):
     def get_template_object(self,template_name):
 
         file_path = os.path.join(template_name,settings.TEMPLATE_FILE_NAME)
-        
         engine = django_template.engine.Engine(dirs=settings.TEMPLATE_DIRS)
         template = engine.get_template(file_path)
 
         return template
 
-    def get_template_raw(self,template_name):
-
-        template = self.get_template_object(template_name)
-        with open(template.origin.name,'r') as infile:
-            return infile.read()
 
     def get_template_info(self,template_name):
 
@@ -56,6 +50,14 @@ class TemplateFileManager(object):
         dir_path = os.path.dirname(template.origin.name)
         parallel_file_manager = ParallelFileManager()
         return parallel_file_manager.get_file_info(dir_path)
+
+
+class CafileManager(object):
+
+    def get_cafile_syntax_json(self):
+        file_path = settings.CAFILE_PATH
+        with open(file_path,'r') as infile:
+            return yaml.load(infile)
 
 
 
@@ -72,12 +74,6 @@ class TemplateFolderManager(object):
 
         return available_templates
 
-    def get_template(self,template_name):
-
-        manager = TemplateFileManager()
-        raw_template = manager.get_template_raw(template_name)
-
-        return raw_template
 
     def get_template_info(self,template_name):
 
@@ -85,3 +81,9 @@ class TemplateFolderManager(object):
         info = manager.get_file_info(template_name)
 
         return info
+
+    def get_cafile_syntax_json(self):
+
+        manager = CafileManager()
+        cafile = manager.get_cafile_syntax_json()
+        return cafile
