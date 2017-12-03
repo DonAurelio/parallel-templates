@@ -54,7 +54,7 @@ class TemplateFileManager(object):
 
 class CafileManager(object):
 
-    def get_cafile_syntax_json(self):
+    def get_cafile_syntax(self):
         file_path = settings.CAFILE_PATH
         with open(file_path,'r') as infile:
             return yaml.load(infile)

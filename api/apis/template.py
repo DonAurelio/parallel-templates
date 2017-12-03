@@ -7,22 +7,34 @@ api = Namespace('template',description='Allows to obtain information of the avai
 
 @api.route('/')
 class TemplateList(Resource):
+    """Deals with templates list tasks."""
 
-	def get(self):
-		"""Returns a list of the available parallel pattern templates."""
-		manager = TemplateFolderManager()
-		data = {
-			'template_list': manager.list_available_templates()
-		}
-		return data
+    def get(self):
+        """Returns a list of the available parallel pattern templates."""
+        manager = TemplateFolderManager()
+        data = {
+            'template_list': manager.list_available_templates()
+        }
+        return data
 
 @api.route('/detail/<string:name>')
 class TemplateDetail(Resource):
+    """Deals with templates detail tasks."""
 
-	def get(self,name):
-		"""Retunrs template info given its name."""
-		manager = TemplateFolderManager()
-		data = {
-			'template_datail': manager.get_template_info()
-		}
-		return data
+    def get(self,name):
+        """Returns template info given its name."""
+        manager = TemplateFolderManager()
+        data = {
+            'template_datail': manager.get_template_info(name)
+        }
+        return data
+
+
+# Defining error handlers
+from django.template import TemplateDoesNotExist
+
+
+@api.errorhandler(TemplateDoesNotExist)
+def handle_template_does_not_exist(error):
+    """Returns a custom message for TemplateDoesNotExist."""
+    return {'message':'Some error has ocurred !!','error':error}
