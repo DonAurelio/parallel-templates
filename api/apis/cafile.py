@@ -1,10 +1,9 @@
-from flask import request
 from flask_restplus import Namespace, Resource, fields
 from catt.core.manager import CafileManager
 
 
 # Defining the name space for Catt cafile
-api = Namespace('cafile',description='Allows to get a c99 source code given a cafile object.')
+api = Namespace('cafile',description='Defines a cafile object.')
 
 # Defining cafile json model
 neighborhood_fields = api.model('Neighborhood',{})
@@ -39,7 +38,7 @@ lattice_fields = api.model(
         )
 })
 
-cafile = api.model(
+cafile_model = api.model(
     'Cafile',{
         'pattern_name': fields.String(
             required=True,
@@ -52,17 +51,3 @@ cafile = api.model(
             description='Number of generations the system would evolve.'
         )
 })
-
-@api.route('/render')
-class CafileRenderJson(Resource):
-    """Deals with cafile renderization tasks."""
-
-    @api.expect(cafile)
-    def post(self):
-        """Given a cafile in json format, render it into a c99 source code."""
-
-        data = request.json
-        manager = CafileManager()
-        manager.render_cafile(data)
-
-        return data

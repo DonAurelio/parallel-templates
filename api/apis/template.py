@@ -1,5 +1,8 @@
+from flask import request
 from flask_restplus import Namespace, Resource
-from catt.core.manager import TemplateFolderManager
+from catt.core.manager import TemplatesFolderManager
+from catt.core.manager import TemplateManager
+from .cafile import cafile_model
 
 
 # Defining the name space for Catt templates
@@ -11,23 +14,34 @@ class TemplateList(Resource):
 
     def get(self):
         """Returns a list of the available parallel pattern templates."""
-        manager = TemplateFolderManager()
+        manager = TemplatesFolderManager()
         data = {
             'template_list': manager.list_available_templates()
         }
         return data
+
 
 @api.route('/detail/<string:name>')
 class TemplateDetail(Resource):
     """Deals with templates detail tasks."""
 
     def get(self,name):
-        """Returns template info given its name."""
-        manager = TemplateFolderManager()
+        """Returns the template info given its name."""
+        manager = TemplateManager()
         data = {
             'template_datail': manager.get_template_info(name)
         }
         return data
+
+    @api.expect(cafile_model)
+    def post(self,name):
+        """Returns c99 source code give a cafile metadata."""
+
+        data = request.json
+        manager = TemplateManager()
+        rendered_template = manager.get_rendered_template(name,data)
+
+        return rendered_template
 
 
 # Defining error handlers

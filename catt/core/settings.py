@@ -14,6 +14,10 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_FILE_NAME = 'template.c'
 
+# Required for template rendering
+from django.conf import settings
+settings.configure(TEMPLATE_DIRS=TEMPLATE_DIRS)
+
 # Parallel File Settings
 PARALLEL_FILE_NAME = 'parallel.yml'
 

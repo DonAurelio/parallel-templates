@@ -18,15 +18,9 @@ class ParallelManager(object):
 
 class TemplateManager(object):
 
-    def get_template_object(self,template_name):
+    def get_template_info(self,template_name):
 
-        template = metadata.Template(template_name)
-
-        return template
-
-    def get_file_info(self,template_name):
-
-        manager = ParallelFileManager()
+        manager = ParallelManager()
         info = manager.get_file_info(template_name)
         
         return info
@@ -48,7 +42,7 @@ class CafileManager(object):
 
 
 
-class TemplateFolderManager(object):
+class TemplatesFolderManager(object):
     """TemplateManager is the administrator of the templates directory."""
 
     def list_available_templates(self):
@@ -60,17 +54,3 @@ class TemplateFolderManager(object):
             if os.path.isdir(os.path.join(search_dir,name))]
 
         return available_templates
-
-
-    def get_template_info(self,template_name):
-
-        manager = ParallelFileManager()
-        info = manager.get_file_info(template_name)
-
-        return info
-
-    def get_cafile_syntax_json(self):
-
-        manager = CafileManager()
-        cafile = manager.get_cafile_syntax_json()
-        return cafile
