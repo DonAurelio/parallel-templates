@@ -1,3 +1,8 @@
+# -*- encoding: utf-8 -*-
+
+"""Each class in the *metadata* module is managed by a facade on present module.
+"""
+
 import os
 import yaml
 
@@ -7,8 +12,23 @@ from . import settings
 
 class ParallelManager(object):
 
+    def __init__(self):
+        """A facade to access the ``metadata.Parallel`` class functionalities."""
+        pass
+
     def get_file_info(self,template_name):
-        """Returns the info of a parallel file."""
+        """Returns the info of a parallel file.
+        The basic info of a parallel file is the *name* of 
+        the parallel proramming pattern an a *description*
+        of the semantic of the same.
+
+        Args:
+            template_name (str): The name of the parallel programming
+                pattern template we request info.
+
+        Returns:
+            Dict containing the parallel file basic info.
+        """
 
         parallel = metadata.Parallel(template_name)
         info = parallel.get_basic_info()
@@ -17,15 +37,13 @@ class ParallelManager(object):
 
 
 class TemplateManager(object):
-
-    def get_template_info(self,template_name):
-
-        manager = ParallelManager()
-        info = manager.get_file_info(template_name)
-        
-        return info
+    """A facade to access the ``metadata.Template```functionalities."""
 
     def get_rendered_template(self,template_name,cafile_dict):
+        """Render a ``metadat.Template`` instance given a 
+        A   *C99 template
+            *C99 source code.  
+        """
 
         template = metadata.Template(template_name)
         cafile = metadata.Cafile(cafile_dict)

@@ -52,10 +52,12 @@ class Parallel(object):
     def __init__(self,pattern_name):
         """An interface to the parallel.yml file data.
         A basic parallel file data in YML format is depicted in the 
-        followig ``Example``, basically a parallel file is a description
-        about how a given code should be parallelized.
+        followig ``Example``, *basically a parallel.yml contains some metadata
+        related with a c99 source code*, additionally  gives a description about 
+        how the related c99 source code should be parallelized.
 
         Example:
+            ...
             parallel:
               # Function
                 evolve:
@@ -66,6 +68,7 @@ class Parallel(object):
                       num_threads: '4'
                       shared: [C,A,B]
                       default: none
+            ...
 
         Args:
             pattern_name (str): The parallel programming pattern from 
