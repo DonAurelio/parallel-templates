@@ -54,10 +54,12 @@ class TemplateFileManager(object):
 
 class CafileManager(object):
 
-    def get_cafile_syntax(self):
-        file_path = settings.CAFILE_PATH
-        with open(file_path,'r') as infile:
-            return yaml.load(infile)
+    def render_cafile(self,cafile):
+        print('render_cafile', type(cafile),cafile)
+
+        # file_path = settings.CAFILE_PATH
+        # with open(file_path,'r') as infile:
+        #     return yaml.load(infile)
 
 
 
