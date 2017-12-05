@@ -2,13 +2,31 @@
 
 In principle, this tool focusses on the programming of **cellular automata models** in C/C++. What is sought is to provide the programmer with a basic template to program cellular automatas that can be easily parallelized with tools such as OpenMP and OpenACC, among others.
 
+## Why catt?
+
 ## Introduction
 A **cellular automata** is a numerical method (like finite differences,
-finite elements, and the Monte-Carlo method) used to simulate and solve **partial diferential equations** which depicts the behavior of great variety of dynamical systems such as, Traffic Flow, [Gases](https://en.wikipedia.org/wiki/Lattice_gas_automaton), Climate, betwenn other. This method has been very popular in history for the simplicity it provides to model a given dynamic system, and also thanks to its nature allows its easy parallelization.
+finite elements, and the Monte-Carlo method) used to simulate and solve **partial diferential equations** which depicts the behavior of great variety of dynamical systems such as, Traffic Flow, [Gases](https://en.wikipedia.org/wiki/Lattice_gas_automaton), Climate, betwenn other. This method has been very popular in history for the simplicity it provides to model dynamic systems, and also thanks to its nature it is easy to parallelize.
+
+<!-- Promover las buenas pacticas de programación parallela en principio en modelos de automatas celulares, a pesar de que existe herramientas para simular sistemas dinamicos, los fisicos y muchos investigadores prefieren tener acceso a todo el detalle del sistema modelado, es por ello 
+que escogen l camino dificil, la idea de esta herramienta es brindar al cientifico una base en código 
+para programar automatas celulares, siendo que esta base permite la facil paralelización dle modelo resultante -->
 
 ## How does **catt** works?
 
-C99 Source Code Template
+**catt** consists mainly of 4 files. 
+
+* **C Source Code Template**, a basic C source code with some jinja2 template syntax. This templates should enclose a given parallel programmig pattern.  
+
+* Cafile.yml, a basic YML file which describes information that will be inserted on the **C Source Code Template** to generate a **C Source Code**.
+
+* **C Source Code**, a basic C source code **without** template syntax. 
+
+* **Parallel.yml**, a YML file with a basic syntax to describe how a program should be parallelized.
+
+### C99 Source Code Template
+
+Altough [jinja2](http://jinja.pocoo.org/) is used mainly to generate HTML code for web applications. We use its syntax to generate C code. 
 
 ```c
 {% autoescape off %}
