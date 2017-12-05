@@ -16,7 +16,7 @@ class ParallelManager(object):
         """A facade to access the ``metadata.Parallel`` class functionalities."""
         pass
 
-    def get_file_info(self,template_name):
+    def get_template_info(self,template_name):
         """Returns the info of a parallel file.
         The basic info of a parallel file is the *name* of 
         the parallel proramming pattern an a *description*
@@ -40,9 +40,15 @@ class TemplateManager(object):
     """A facade to access the ``metadata.Template```functionalities."""
 
     def get_rendered_template(self,template_name,cafile_dict):
-        """Render a ``metadat.Template`` instance given a 
-        A   *C99 template
-            *C99 source code.  
+        """Render a *C99 Source Code Template* given a *metadata.Cafile*.
+
+        Args:
+            template_name (str): The parallel programming pattern name
+                from which we want a template.
+            cafile_dict (dict): The neccesary data to render the template.
+
+        Returns:
+             A raw string C99 Source Code.
         """
 
         template = metadata.Template(template_name)
@@ -64,7 +70,12 @@ class TemplatesFolderManager(object):
     """TemplateManager is the administrator of the templates directory."""
 
     def list_available_templates(self):
-        """List all available directories in the templates directory."""
+        """List all available directories in the templates directory.
+
+    
+        Returns: 
+            A list of all available parallel programming pattern templates.
+        """
 
         available_templates = []
         for search_dir in settings.TEMPLATE_DIRS:

@@ -102,14 +102,31 @@ class Parallel(object):
 class Template(object):
 
     def __init__(self,pattern_name):
-        """An interface to a template.c file.
-        A *template.c* file, is a common c99 source code that enclose a 
-        parallel programming pattern, so it is a piece of code from which 
-        the programer should start if he/she would like to parallelize 
-        the code in a near future.
+        """An interface to a C99 Source Code Template.
+        A *C99 Source Code Template* is a C99 source file with some 
+        django template syntax as depicted in the ``Example``. This 
+        syntax allow us to generate C99 code. The structure of the 
+        template follows a given parallel programming pattern. This 
+        style of programming enable the easy parallelization of the 
+        code in a near future.
+
+        Note:
+            The variables specified in the template will be replaced
+            with the data specified in a given *Cafile*, this step is 
+            called template renderization.
+
+        Example:
+            ...
+            struct Neighborhood
+            {
+                {% for neighbor in lattice.neighborhood.keys %}
+                {{ lattice.type }} {{ neighbor }};
+                {% endfor %}
+            };
+            ...
         """
 
-        #: str: The parallel programming name.
+        #: str: The parallel programming pattern name.
         self._pattern_name = pattern_name
 
         file_path = os.path.join(pattern_name,settings.TEMPLATE_FILE_NAME)
@@ -117,13 +134,14 @@ class Template(object):
         self._django_template = engine.get_template(file_path)
 
     def render(self,cafile_obj):
-        """Render the template given a cafile instance.
+        """Render the C99 Source Code Template given a Cafile instance.
 
         Args:
-            cafile_obj: It is a CAFile object.
+            cafile_obj (Cafile): The data that will be placed in the
+                C99 Source Code Template to generate a C99 Source Code.
 
         Returns:
-            An string with a rendered C99 raw code.
+            A raw string C99 Source Code.
 
         """
         cafile_dict = cafile_obj.data

@@ -2,6 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource
 from catt.core.manager import TemplatesFolderManager
 from catt.core.manager import TemplateManager
+from catt.core.manager import ParallelManager
 from .cafile import cafile_model
 
 
@@ -27,7 +28,7 @@ class TemplateDetail(Resource):
 
     def get(self,name):
         """Returns the template info given its name."""
-        manager = TemplateManager()
+        manager = ParallelManager()
         data = {
             'template_datail': manager.get_template_info(name)
         }
