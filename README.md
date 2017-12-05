@@ -286,3 +286,21 @@ functs:
                     - out
                   default: none
 ```
+
+# API 
+
+This tool has an Api to interact with the templates available in the application, at the moment it only has the template of the  stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/).
+
+# References
+
+[Structured Parallel Programming: Patterns for Efficient Computation](https://www.amazon.com/Structured-Parallel-Programming-Efficient-Computation/dp/0124159931)
+
+[Designing a RESTful API using Flask-RESTful](https://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful)
+
+[Flask-RESTful](http://flask-restful.readthedocs.io/en/latest/)
+
+[Designing a RESTful API with Python and Flask](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+
+[AJAX with jQuery](http://flask.pocoo.org/docs/0.12/patterns/jquery/)
+
+[Flask Examples Github](https://github.com/pallets/flask/tree/master/examples/jqueryexample)
