@@ -2,15 +2,15 @@
 
 In principle, this tool focusses on the programming of **cellular automata models** in C/C++. What is sought is to provide the programmer with a basic template to program cellular automatas that can be easily parallelized with tools such as OpenMP and OpenACC, among others.
 
-## Why catt?
+<!-- ## Why catt? -->
+<!-- Promover las buenas pacticas de programación parallela en principio en modelos de automatas celulares, a pesar de que existe herramientas para simular sistemas dinamicos, los fisicos y muchos investigadores prefieren tener acceso a todo el detalle del sistema modelado, es por ello 
+que escogen l camino dificil, la idea de esta herramienta es brindar al cientifico una base en código 
+para programar automatas celulares, siendo que esta base permite la facil paralelización dle modelo resultante -->
 
 ## Introduction
 A **cellular automata** is a numerical method (like finite differences,
 finite elements, and the Monte-Carlo method) used to simulate and solve **partial diferential equations** which depicts the behavior of great variety of dynamical systems such as, Traffic Flow, [Gases](https://en.wikipedia.org/wiki/Lattice_gas_automaton), Climate, betwenn other. This method has been very popular in history for the simplicity it provides to model dynamic systems, and also thanks to its nature it is easy to parallelize.
 
-<!-- Promover las buenas pacticas de programación parallela en principio en modelos de automatas celulares, a pesar de que existe herramientas para simular sistemas dinamicos, los fisicos y muchos investigadores prefieren tener acceso a todo el detalle del sistema modelado, es por ello 
-que escogen l camino dificil, la idea de esta herramienta es brindar al cientifico una base en código 
-para programar automatas celulares, siendo que esta base permite la facil paralelización dle modelo resultante -->
 
 ## How does **catt** works?
 
@@ -289,7 +289,21 @@ functs:
 
 # API 
 
-This tool has an Api to interact with the templates available in the application, at the moment it only has the template of the  stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/).
+This tool has an API to interact with the templates available in the application, at the moment it only has the template of the stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/). To run a API install requirements and run the application as follows:
+
+```bash
+pip3 install -r ./api/requirements.txt
+python3 api/app.py
+```
+
+The application expose the following endpoints to interact with.
+
+| HTTP Method | URI | Action |
+|---|---|---|
+| GET | http://[hostname]/templates | Retrieve list of templates |
+| GET | http://[hostname]/templates/[template_name] | Retrieve a template detail |
+| POST | http://[hostname]/templates/[template_name] | Render a template |
+
 
 # References
 

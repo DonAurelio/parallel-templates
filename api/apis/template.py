@@ -7,9 +7,10 @@ from .cafile import cafile_model
 
 
 # Defining the name space for Catt templates
-api = Namespace('template',description='Allows to obtain information of the available templates.')
+api = Namespace('templates',description='Allows to obtain information of the available templates.')
 
-@api.route('/')
+
+@api.route('')
 class TemplateList(Resource):
     """Deals with templates list tasks."""
 
@@ -22,7 +23,7 @@ class TemplateList(Resource):
         return data
 
 
-@api.route('/detail/<string:name>')
+@api.route('/<string:name>')
 class TemplateDetail(Resource):
     """Deals with templates detail tasks."""
 
