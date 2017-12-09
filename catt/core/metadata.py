@@ -49,6 +49,28 @@ class Cafile(object):
 
 class Parallel(object):
 
+    @staticmethod
+    def _get_file_path(pattern_name):
+
+        file_path = os.path.join(pattern_name,settings.TEMPLATE_FILE_NAME)
+        
+        engine = template.engine.Engine(dirs=settings.TEMPLATE_DIRS)
+        django_template = engine.get_template(file_path)
+        dir_path = os.path.dirname(django_template.origin.name)
+        file_path = os.path.join(dir_path,settings.PARALLEL_FILE_NAME)
+
+        return file_path
+
+    @staticmethod
+    def _load_data(file_path):
+        with open(file_path,'r') as infile:
+            return yaml.load(infile)
+
+    @staticmethod
+    def _load_raw(file_path):
+        with open(file_path,'r') as infile:
+            return infile.read()
+
     def __init__(self,pattern_name):
         """An interface to the parallel.yml file data.
         A basic parallel file data in YML format is depicted in the 
@@ -76,17 +98,32 @@ class Parallel(object):
 
         """
 
-        file_path = os.path.join(pattern_name,settings.TEMPLATE_FILE_NAME)
-        
-        engine = template.engine.Engine(dirs=settings.TEMPLATE_DIRS)
-        django_template = engine.get_template(file_path)
-        dir_path = os.path.dirname(django_template.origin.name)
-        file_path = os.path.join(dir_path,settings.PARALLEL_FILE_NAME)
+        file_path = self._get_file_path(pattern_name)
 
         #: dict: The parallel file containing data.
-        self._data = {}
-        with open(file_path,'r') as infile:
-            self._data = yaml.load(infile)
+        self._data = self._load_data(file_path)
+
+        self._raw = self._load_raw(file_path)
+
+        self._pattern_name = pattern_name
+
+        self._file_name = os.path.basename(file_path)
+
+    @property
+    def data(self):
+        return self._data
+
+    @property
+    def raw(self):
+        return self._raw
+
+    @property
+    def pattern_name(self):
+        return self._pattern_name
+
+    @property
+    def file_name(self):
+        return self._file_name
 
     def get_basic_info(self):
         """Returns the info of a parallel file."""

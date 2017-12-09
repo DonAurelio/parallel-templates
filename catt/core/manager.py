@@ -35,11 +35,14 @@ class ParallelManager(object):
 
         return info
 
+    def get_parallel_file_data(self):
+        pass
+
 
 class TemplateManager(object):
     """A facade to access the ``metadata.Template```functionalities."""
 
-    def get_rendered_template(self,template_name,cafile_dict):
+    def _get_rendered_template(self,template_name,cafile_dict):
         """Render a *C99 Source Code Template* given a *metadata.Cafile*.
 
         Args:
@@ -57,6 +60,17 @@ class TemplateManager(object):
         rendered_template = template.render(cafile)
 
         return rendered_template
+
+    def get_template_data(self,template_name,cafile_dict):
+
+        text = self._get_rendered_template(template_name,cafile_dict)
+        data = {
+            'name': template_name,
+            'type': 'c99',
+            'text': text
+        }
+
+        return data
 
 
 class CafileManager(object):

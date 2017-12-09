@@ -40,8 +40,24 @@ class TemplateDetail(Resource):
         """Returns c99 source code give a cafile metadata."""
 
         data = request.json
-        manager = TemplateManager()
-        rendered_template = manager.get_rendered_template(name,data)
+        t_manager = TemplateManager()
+        rendered_template = t_manager.get_rendered_template(name,data)
+
+        data = {
+            'success':"The template '%s' was loaded successfully." % name
+            'data': {
+                'files'[
+                    {
+                        'name': name,
+                        'type': 'c99',
+                        'text': rendered_template
+                    },
+                    {
+
+                    }
+                ]
+            }
+        }
 
         return rendered_template
 
