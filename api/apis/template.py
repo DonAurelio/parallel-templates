@@ -18,7 +18,10 @@ class TemplateList(Resource):
         """Returns a list of the available parallel pattern templates."""
         manager = TemplatesFolderManager()
         data = {
-            'template_list': manager.list_available_templates()
+            'success':"The template list was loaded successfully.",
+            'data':{
+                'template_list': manager.list_available_templates()
+            }
         }
         return data
 

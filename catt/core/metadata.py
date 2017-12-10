@@ -191,4 +191,4 @@ class Template(object):
 
     @property
     def file_name(self):
-        return self._pattern_name
+        return self._pattern_name + '.c'
