@@ -188,3 +188,7 @@ class Template(object):
     def path_to_file(self):
         """Returns the path to the file."""
         return self._django_template.origin.name
+
+    @property
+    def file_name(self):
+        return self._pattern_name

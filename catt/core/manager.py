@@ -35,15 +35,31 @@ class ParallelManager(object):
 
         return info
 
-    def get_parallel_file_data(self):
-        pass
+    def get_parallel_file_data(self,template_name):
+
+        parallel = metadata.Parallel(template_name)
+        
+        data = {
+            'name':parallel.file_name,
+            'type':'yml',
+            'text':parallel.raw
+        }
+
+        return data
 
 
 class TemplateManager(object):
     """A facade to access the ``metadata.Template```functionalities."""
 
-    def _get_rendered_template(self,template_name,cafile_dict):
-        """Render a *C99 Source Code Template* given a *metadata.Cafile*.
+    def get_template_info(self,template_name):
+
+        manager = ParallelManager()
+        info = manager.get_template_info(template_name)
+
+        return info
+
+    def get_template_data(self,template_name,cafile_dict):
+        """Pending.
 
         Args:
             template_name (str): The parallel programming pattern name
@@ -51,23 +67,16 @@ class TemplateManager(object):
             cafile_dict (dict): The neccesary data to render the template.
 
         Returns:
-             A raw string C99 Source Code.
+             dict: Data of the rendered template.
         """
 
         template = metadata.Template(template_name)
         cafile = metadata.Cafile(cafile_dict)
 
-        rendered_template = template.render(cafile)
-
-        return rendered_template
-
-    def get_template_data(self,template_name,cafile_dict):
-
-        text = self._get_rendered_template(template_name,cafile_dict)
         data = {
-            'name': template_name,
+            'name': template.file_name,
             'type': 'c99',
-            'text': text
+            'text': template.render(cafile)
         }
 
         return data
@@ -97,3 +106,6 @@ class TemplatesFolderManager(object):
             if os.path.isdir(os.path.join(search_dir,name))]
 
         return available_templates
+
+    def get_template_files_data(self):
+        pass

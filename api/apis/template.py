@@ -29,9 +29,10 @@ class TemplateDetail(Resource):
 
     def get(self,name):
         """Returns the template info given its name."""
-        manager = ParallelManager()
+        manager = TemplateManager()
+        info = manager.get_template_info(name)
         data = {
-            'template_datail': manager.get_template_info(name)
+            'template_datail': info
         }
         return data
 
@@ -40,26 +41,24 @@ class TemplateDetail(Resource):
         """Returns c99 source code give a cafile metadata."""
 
         data = request.json
+
         t_manager = TemplateManager()
-        rendered_template = t_manager.get_rendered_template(name,data)
+        template_file_data = t_manager.get_template_data(name,data)
+        
+        p_manager = ParallelManager()
+        parallel_file_data = p_manager.get_parallel_file_data(name)
 
         data = {
-            'success':"The template '%s' was loaded successfully." % name
+            'success':"The template '%s' was loaded successfully." % name,
             'data': {
-                'files'[
-                    {
-                        'name': name,
-                        'type': 'c99',
-                        'text': rendered_template
-                    },
-                    {
-
-                    }
+                'files':[
+                    template_file_data,
+                    parallel_file_data
                 ]
             }
         }
 
-        return rendered_template
+        return data
 
 
 # Defining error handlers
