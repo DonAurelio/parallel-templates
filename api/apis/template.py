@@ -43,8 +43,7 @@ class TemplateDetail(Resource):
     def post(self,name):
         """Returns c99 source code give a cafile metadata."""
 
-        data = request.json
-
+        data = request.get_json()
         t_manager = TemplateManager()
         template_file_data = t_manager.get_template_data(name,data)
         
