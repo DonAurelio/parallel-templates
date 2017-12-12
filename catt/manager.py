@@ -6,8 +6,8 @@
 import os
 import yaml
 
-from . import metadata
-from . import settings
+from .core import metadata
+from .core import settings
 
 
 class ParallelManager(object):
@@ -80,13 +80,6 @@ class TemplateManager(object):
         }
 
         return data
-
-
-class CafileManager(object):
-
-    def __init__(self):
-        pass
-
 
 
 class TemplatesFolderManager(object):

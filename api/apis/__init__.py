@@ -1,15 +1,14 @@
 from flask_restplus import Api
-
-from .cafile import api as cafile_namespace
-from .template import api as template_namespace
+from . import template
 
 
 api = Api(
     title='Catt Api',
     version='1.0',
     description="""Provides a set of parallel programming 
-    patterns in c99 source code for efficient parallelization."""
+    templates for cellular automata programming in c99 source 
+    code which allow easy parallelization."""
 )
 
-api.add_namespace(cafile_namespace)
-api.add_namespace(template_namespace)
+# Adding template resource namesace to the API
+api.add_namespace(template.api)
