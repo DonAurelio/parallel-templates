@@ -287,7 +287,7 @@ functs:
                   default: none
 ```
 
-# API 
+# Test 
 
 This tool has an API to interact with the templates available in the application, at the moment it only has the template of the stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/). To run a API install requirements and run the application as follows:
 
@@ -304,6 +304,15 @@ The application expose the following endpoints to interact with.
 | GET | http://[hostname]/templates/[template_name] | Retrieve a template detail |
 | POST | http://[hostname]/templates/[template_name] | Render a template |
 
+# Deployment with Docker
+
+Perform the following commands to build the **catt** image, then to run the **catt** API in a container. These command need to be 
+performed form the catt project root directory.
+
+```sh
+docker build -t catt .
+docker run -d -v ${PWD}:/usr/src/app --name catt -p 5000:5000 catt
+```
 
 # References
 
