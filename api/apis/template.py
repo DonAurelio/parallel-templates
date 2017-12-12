@@ -59,7 +59,7 @@ Cafile = api.model(
 
 @api.route('')
 class TemplateList(Resource):
-    """List templates."""
+    """list Cellular Automata available templates."""
 
     def get(self):
         """Return a list of the available c99 source code templates."""
@@ -76,6 +76,11 @@ class TemplateList(Resource):
 @api.route('/<string:name>')
 class TemplateDetail(Resource):
     """Cellular Automata Templates detail and rederization."""
+
+    def head(self):
+        """Used for clients to check if the resource is available."""
+        data = {}
+        return data
 
     def get(self,name):
         """Returns the template info given its name."""
