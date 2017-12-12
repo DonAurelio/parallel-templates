@@ -40,9 +40,9 @@ class ParallelManager(object):
         parallel = metadata.Parallel(template_name)
         
         data = {
-            'name':parallel.file_name,
-            'type':'yml',
-            'text':parallel.raw
+            'name': parallel.file_name,
+            'ftype': parallel.file_type,
+            'text': parallel.raw
         }
 
         return data
@@ -75,7 +75,7 @@ class TemplateManager(object):
 
         data = {
             'name': template.file_name,
-            'type': 'c99',
+            'ftype': template.file_type,
             'text': template.render(cafile)
         }
 

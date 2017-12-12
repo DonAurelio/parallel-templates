@@ -125,6 +125,10 @@ class Parallel(object):
     def file_name(self):
         return self._file_name
 
+    @property
+    def file_type(self):
+        return 'yml'
+
     def get_basic_info(self):
         """Returns the info of a parallel file."""
 
@@ -192,3 +196,7 @@ class Template(object):
     @property
     def file_name(self):
         return self._pattern_name + '.c'
+
+    @property
+    def file_type(self):
+        return 'c99'

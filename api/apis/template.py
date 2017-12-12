@@ -61,6 +61,11 @@ Cafile = api.model(
 class TemplateList(Resource):
     """list Cellular Automata available templates."""
 
+    def head(self):
+        """Used for clients to check if the resource is available."""
+        data = {}
+        return data
+
     def get(self):
         """Return a list of the available c99 source code templates."""
         manager = TemplatesFolderManager()
@@ -77,17 +82,12 @@ class TemplateList(Resource):
 class TemplateDetail(Resource):
     """Cellular Automata Templates detail and rederization."""
 
-    def head(self):
-        """Used for clients to check if the resource is available."""
-        data = {}
-        return data
-
     def get(self,name):
         """Returns the template info given its name."""
         manager = TemplateManager()
         info = manager.get_template_info(name)
         data = {
-            'message':"The template list was loaded successfully. ",
+            'message':"The template detail was loaded successfully. ",
             'data': {
                 'template_detail': info
             }
