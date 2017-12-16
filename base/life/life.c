@@ -8,13 +8,12 @@
 #define Generations 1
 #endif
 
-#ifndef RowDim
-#define RowDim 20
+#ifndef N
+#define N 20
 #endif
 
-#ifndef ColDim
-#define ColDim 20
-#endif
+#define RowDim N
+#define ColDim N
 
 
 struct Neighborhood
@@ -135,7 +134,8 @@ void check(bool ** in){
 
     bool result = a && b && c && d && e && f && g && h && i && j && k && l;
 
-    printf("Checking %d\n",result);
+    printf("%d \t\t %d \t\t %s \t\t ", RowDim , ColDim, (result==1) ? "Ok": "Fail");
+    
 
 }
 
@@ -143,7 +143,6 @@ int main(int argc, char const **argv)
 {
 
     /* -- Celular space initialization -- */
-    printf("Generations: %d, RowDim %d, ColDim %d\n",Generations,RowDim,ColDim);
 
     bool ** in = (bool **) malloc(RowDim*sizeof( bool *));
     bool ** out = (bool **) malloc(RowDim*sizeof( bool *));
