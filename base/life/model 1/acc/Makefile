@@ -14,7 +14,8 @@ EXT = .c
 COMPILER = pgc++
 # CFLAGS = -O3
 # CFLAGS = -O3 -mp
-CFLAGS = -O3 -acc -ta=tesla:cc30,time -Minfo=all
+# CFLAGS = -O3 -acc -ta=tesla:cc30,time -Minfo=all
+CFLAGS = -O3 -acc -ta=tesla:cc30
 
 # Debug parameters
 DGENERATIONS = 100

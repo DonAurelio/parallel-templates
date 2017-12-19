@@ -1,6 +1,5 @@
 #include <stdio.h>  /* Standard I/O Library: printf */
 #include <stdlib.h> /* Standard Library: malloc, calloc, free, ralloc */
-#include <stdbool.h>
 
 #define MOD(a,b) ((((a)%(b))+(b))%(b))
 
@@ -102,8 +101,8 @@ void save(bool ** matrix, const char * name){
 
 void evolve(bool ** in, bool ** out){
 
-    for (int i = 1; i <= Generations; ++i){
-        #pragma omp parallel for
+    for (int g = 1; g <= Generations; ++g){
+        #pragma omp parallel for num_threads(4)
         for (int i = 0; i < RowDim; ++i){
             for (int j = 0; j < ColDim; ++j){
                 struct Neighborhood nbhd = neighborhood(in,i,j);
@@ -152,8 +151,6 @@ int main(int argc, char const **argv)
         in[i] = (bool *) malloc(ColDim*sizeof(bool));
         out[i] = (bool *) malloc(ColDim*sizeof(bool));
     }
-
-    char file_name[100];
     
     initialize(in);
     initialize(out);

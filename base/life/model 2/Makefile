@@ -6,16 +6,16 @@ TARGET = life
 EXT = .c
 
 # GNU Compiler flags
-# COMPILER = gcc
+COMPILER = g++
 # CFLAGS = -O3
-# CFLAGS = -O3 -fopenmp
+CFLAGS = -O3 -fopenmp
 
 # PGI Compiler flags
-COMPILER = pgc++
+# COMPILER = pgc++
 # CFLAGS = -O3
 # CFLAGS = -O3 -mp -Minfo=all -ta=multicore
 # CFLAGS = -O3 -mp=allcores -Minfo=mp,time
-CFLAGS = -O3 -mp
+# CFLAGS = -O3 -mp
 
 # Test parameters
 GENERATIONS = 100
@@ -31,7 +31,7 @@ run: clean compile
 
 run_test: clean
 	@date | tee Time.txt
-	@echo "\nRowDim \t ColDim \t Status \t T.Real(sg) \t T.Usuario(sg) \t T.Kernel(sg) \t CPU \t Memoria(KB)" | tee -a Time.txt; \
+	@echo "\nRowDim \t ColDim \t Status \t T.Real(sg) \t T.Usuario(sg) \t T.Kernel(sg) \t CPU \t Memoria(KB)" | tee -a Time.txt
 
 	@for size in $(GRID_SIZES); do \
 		$(COMPILER) $(TARGET)$(EXT) -o $(TARGET) -D Generations=$(GENERATIONS) -D N=$$size $(CFLAGS);\

@@ -4,7 +4,7 @@
 #define MOD(a,b) ((((a)%(b))+(b))%(b))
 
 #ifndef Generations
-#define Generations 1
+#define Generations 50
 #endif
 
 #ifndef N
@@ -13,7 +13,6 @@
 
 #define RowDim N
 #define ColDim N
-
 
 
 struct Neighborhood
@@ -40,7 +39,7 @@ void initialize(bool ** matrix){
     matrix[10][12] = 1;
 }
 
-// #pragma acc routine
+
 struct Neighborhood neighborhood(bool ** matrix, int row, int col){
     struct Neighborhood nbhd;
 
@@ -65,7 +64,7 @@ struct Neighborhood neighborhood(bool ** matrix, int row, int col){
     return nbhd;
 }
 
-// #pragma acc routine
+
 bool function(struct Neighborhood nbhd){
     
     int sum = nbhd.left_up + nbhd.up + nbhd.right_up + nbhd.left + nbhd.right + nbhd.left_down + nbhd.down + nbhd.right_down;
@@ -104,29 +103,21 @@ void evolve(bool ** in){
 
     bool out[RowDim][ColDim];
 
-    #pragma acc data copy(in[0:RowDim][0:ColDim]), create(out[0:RowDim][0:ColDim]) 
-    {
-
-        for (int g = 1; g <= Generations; ++g){
-
-            #pragma acc parallel loop gang
-            for (int i = 0; i < RowDim; ++i){
-                #pragma acc loop vector
-                for (int j = 0; j < ColDim; ++j){
-                    struct Neighborhood nbhd = neighborhood(in,i,j);
-                    out[i][j] = function(nbhd);
-                }
-            }
-
-            #pragma acc parallel loop 
-            for (int i = 0; i < RowDim; ++i){
-                #pragma acc loop
-                for (int j = 0; j < ColDim; ++j){
-                    in[i][j] = out[i][j];
-                }
+    for (int g = 1; g <= Generations; ++g){
+        #pragma omp parallel for num_threads(4)
+        for (int i = 0; i < RowDim; ++i){
+            for (int j = 0; j < ColDim; ++j){
+                struct Neighborhood nbhd = neighborhood(in,i,j);
+                out[i][j] = function(nbhd);
             }
         }
 
+        #pragma omp parallel for num_threads(4)
+        for (int i = 0; i < RowDim; ++i){
+            for (int j = 0; j < ColDim; ++j){
+                in[i][j] = out[i][j];
+            }
+        }
     }
 }
 
@@ -162,7 +153,7 @@ int main(int argc, char const **argv)
     for (int i=0; i<RowDim; ++i){ 
         in[i] = (bool *) malloc(ColDim*sizeof(bool));
     }
-
+    
     initialize(in);
     evolve(in);
     check(in);
