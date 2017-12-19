@@ -6,7 +6,7 @@ TARGET = life
 EXT = .c
 
 # GNU Compiler flags
-# COMPILER = gcc
+# COMPILER = g++
 # CFLAGS = -O3
 # CFLAGS = -O3 -fopenmp
 
@@ -31,7 +31,7 @@ run: clean compile
 
 run_test: clean
 	@date | tee Time.txt
-	@echo "\nRowDim \t ColDim \t Status \t T.Real(sg) \t T.Usuario(sg) \t T.Kernel(sg) \t CPU \t Memoria(KB)" | tee -a Time.txt; \
+	@echo "\nRowDim \t ColDim \t Status \t T.Real(sg) \t T.Usuario(sg) \t T.Kernel(sg) \t CPU \t Memoria(KB)" | tee -a Time.txt
 
 	@for size in $(GRID_SIZES); do \
 		$(COMPILER) $(TARGET)$(EXT) -o $(TARGET) -D Generations=$(GENERATIONS) -D N=$$size $(CFLAGS);\
