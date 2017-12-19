@@ -8,7 +8,7 @@ EXT = .c
 # GNU Compiler flags
 COMPILER = g++
 # CFLAGS = -O3
-CFLAGS = -O3 -fopenmp
+# CFLAGS = -O3 -fopenmp
 
 # PGI Compiler flags
 # COMPILER = pgc++
@@ -24,7 +24,7 @@ ITERATIONS = 1 2 3
 
 
 compile:
-	@$(COMPILER) $(TARGET)$(EXT) -o $(TARGET) $(CFLAGS) -D Generations=10 -D N=20
+	@$(COMPILER) $(TARGET)$(EXT) -o $(TARGET) $(CFLAGS) -D Generations=100 -D N=3000
 
 run: clean compile
 	./$(TARGET)

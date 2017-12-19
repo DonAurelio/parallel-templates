@@ -99,9 +99,7 @@ void save(bool ** matrix, const char * name){
     fclose(pf);
 }
 
-void evolve(bool ** in){
-
-    bool out[RowDim][ColDim];
+void evolve(bool ** in,bool ** out){
 
     for (int g = 1; g <= Generations; ++g){
         #pragma omp parallel for num_threads(4)
@@ -146,21 +144,24 @@ void check(bool ** in){
 int main(int argc, char const **argv)
 {
 
-    /* -- Celular space initialization -- */
-
     bool ** in = (bool **) malloc(RowDim*sizeof( bool *));
+    bool ** out = (bool **) malloc(RowDim*sizeof( bool *));
 
     for (int i=0; i<RowDim; ++i){ 
         in[i] = (bool *) malloc(ColDim*sizeof(bool));
+        out[i] = (bool *) malloc(ColDim*sizeof(bool));
     }
     
     initialize(in);
-    evolve(in);
+    initialize(out);
+    evolve(in,out);
     check(in);
 
     /* -- Releasing resources -- */
     for (int i=0; i<RowDim; ++i) free(in[i]);
     free(in);
+    for (int i=0; i<RowDim; ++i) free(out[i]);
+    free(out);
 
     return EXIT_SUCCESS;
 }

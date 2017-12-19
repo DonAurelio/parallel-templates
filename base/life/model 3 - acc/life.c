@@ -102,7 +102,11 @@ void save(bool ** matrix, const char * name){
 
 void evolve(bool ** in){
 
-    bool out[RowDim][ColDim];
+    bool ** out = (bool **) malloc(RowDim*sizeof( bool *));
+
+    for (int i=0; i<RowDim; ++i){ 
+        out[i] = (bool *) malloc(ColDim*sizeof(bool));
+    }
 
     #pragma acc data copy(in[0:RowDim][0:ColDim]), create(out[0:RowDim][0:ColDim]) 
     {
@@ -128,6 +132,9 @@ void evolve(bool ** in){
         }
 
     }
+
+    for (int i=0; i<RowDim; ++i) free(out[i]);
+    free(out);
 }
 
 void check(bool ** in){

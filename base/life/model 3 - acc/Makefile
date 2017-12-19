@@ -15,7 +15,8 @@ COMPILER = pgc++
 # CFLAGS = -O3
 # CFLAGS = -O3 -mp
 # CFLAGS = -O3 -acc -ta=tesla:cc30,time -Minfo=all
-CFLAGS = -O3 -acc -ta=tesla:cc30
+# CFLAGS = -O3 -acc -ta=tesla:cc30
+CFLAGS = -O3 -acc -ta=tesla:cc30,time
 
 # Debug parameters
 DGENERATIONS = 100
@@ -25,7 +26,7 @@ DGRID_SIZE = 1000
 # Test parameters
 GENERATIONS = 100
 GRID_SIZES = 250 500 750 1000 1250 1500 2000 3000
-# GRID_SIZES = 20 40
+# GRID_SIZES = 250
 ITERATIONS = 1 2 3
 
 
@@ -46,7 +47,11 @@ run_test: clean
 		done;\
 	done 
 
-
+# This feature do not work in the pgicontainer 
+# it need the nvidia-settings that comes with 
+# the nvidia driver that is not present into the container.
+device_top:
+	@watch ../../utils/gpumonitor.sh
 
 clean:
 	@clear
