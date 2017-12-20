@@ -6,16 +6,16 @@ TARGET = life
 EXT = .c
 
 # GNU Compiler flags
-COMPILER = g++
+# COMPILER = g++
 # CFLAGS = -O3
 # CFLAGS = -O3 -fopenmp
 
 # PGI Compiler flags
-# COMPILER = pgc++
+COMPILER = pgc++
 # CFLAGS = -O3
 # CFLAGS = -O3 -mp -Minfo=all -ta=multicore
 # CFLAGS = -O3 -mp=allcores -Minfo=mp,time
-# CFLAGS = -O3 -mp
+CFLAGS = -O3 -mp
 
 # Test parameters
 GENERATIONS = 100

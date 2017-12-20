@@ -6,7 +6,7 @@ TARGET = life
 EXT = .c
 
 # GNU Compiler flags
-# COMPILER = gcc
+# COMPILER = g++
 # CFLAGS = -O3
 # CFLAGS = -O3 -fopenmp
 
@@ -16,7 +16,7 @@ COMPILER = pgc++
 # CFLAGS = -O3 -mp
 # CFLAGS = -O3 -acc -ta=tesla:cc30,time -Minfo=all
 # CFLAGS = -O3 -acc -ta=tesla:cc30
-CFLAGS = -O3 -acc -ta=tesla:cc30,time
+CFLAGS = -O3 -acc -ta=tesla:cc30
 
 # Debug parameters
 DGENERATIONS = 100
@@ -51,7 +51,7 @@ run_test: clean
 # it need the nvidia-settings that comes with 
 # the nvidia driver that is not present into the container.
 device_top:
-	@watch ../../utils/gpumonitor.sh
+	@watch ../../../utils/gpumonitor.sh
 
 clean:
 	@clear
