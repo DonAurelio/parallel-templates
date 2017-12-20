@@ -3,9 +3,19 @@
 
 #define MOD(a,b) ((((a)%(b))+(b))%(b))
 
+
+#ifndef Generations
 #define Generations {{ generations }}
+#endif
+
+#ifndef RowDim
 #define RowDim {{ lattice.rowdim }}
+#endif
+
+#ifndef ColDim
 #define ColDim {{ lattice.coldim }}
+#endif
+
 
 struct Neighborhood
 {
