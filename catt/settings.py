@@ -6,7 +6,7 @@ import os
 # Catt Directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Templates Folder Manager Settings
+# Templates
 TEMPLATES_DIR = 'templates'
 TEMPLATE_DIRS = (
 	os.path.join(BASE_DIR,TEMPLATES_DIR),
