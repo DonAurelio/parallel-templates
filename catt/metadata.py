@@ -41,7 +41,15 @@ class Template(object):
         #: str: Path to the file
         self.origin = origin
 
-    def render(self,cafile_obj):
+    @property
+    def file_name(self):
+        return self.pattern_name + '.c'
+
+    @property
+    def file_type(self):
+        return 'c99'
+
+    def render(self,cafile):
         """Render the C99 Source Code Template given a Cafile instance.
 
         Args:
@@ -53,27 +61,9 @@ class Template(object):
 
         """
         template = jinja2.Template(self.source)
-        print('data',cafile_obj.data)
-        source = template.render(cafile_obj.data)
+        source = template.render(cafile.data)
   
         return source
-
-    @property
-    def file_name(self):
-        return self.pattern_name + '.c'
-
-    @property
-    def file_type(self):
-        return 'c99'
-
-    def to_dict(self):
-        data = {
-            'name': self.file_name,
-            'ftype': self.file_type,
-            'text': self.source
-        }
-
-        return data 
 
 
 class Parallel(object):
@@ -86,10 +76,6 @@ class Parallel(object):
         self.source = parallel_string
 
     @property
-    def pattern_name(self):
-        return self.data.get('name','')
-
-    @property
     def file_name(self):
         return 'parallel.yml'
 
@@ -97,13 +83,12 @@ class Parallel(object):
     def file_type(self):
         return 'yml'
 
-    def to_dict(self):
-        data = {
-            'name': self.file_name,
-            'ftype': self.file_type,
-            'text': self.source
-        }
 
+    def description(self):
+        data = {
+            'name': self.data.get('name',''),
+            'description': self.data.get('description','')
+        }
         return data
 
 

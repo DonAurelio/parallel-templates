@@ -1,5 +1,5 @@
 from flask_restplus import Api
-from . import template
+from .template import template
 
 
 api = Api(

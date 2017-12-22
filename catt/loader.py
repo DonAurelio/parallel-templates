@@ -61,11 +61,3 @@ def get_parallel_file(template_dir):
         parallel_file_raw = file.read()
         parallel = metadata.Parallel(parallel_file_raw)
         return parallel
-
-
-def render_to_string(template_name,cafile_raw):
-    pass
-
-
-def from_string(self, template_code):
-    pass

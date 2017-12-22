@@ -6,82 +6,42 @@
 import os
 import yaml
 
-from .core import metadata
-from .core import settings
+from . import loader
+from . import metadata
 
 
 class TemplateManager(object):
     """A facade to access the ``metadata.Template```functionalities."""
 
     def list_templates(self):
-        pass
+        return loader.list_template_dirs()
 
-#     def get_template_detail(self,template_name):
-#         pass
+    def get_template_detail(self,template_name):
 
-#     def get_template_info(self,template_name):
+        # Template info is described in the parallel.yml metadata
+        parallel_file = loader.get_parallel_file(template_name)
+        data = parallel_file.description()
+        return data
 
-#         manager = ParallelManager()
-#         info = manager.get_template_info(template_name)
+    def render_to_data(template_name,cafile_string):
 
-#         return info
+        template = loader.get_template(template_name)
+        cafile =  metadata.Cafile(cafile_string)
+        raw_code = template.render(cafile)
 
-#     def get_template_data(self,template_name,cafile_dict):
-#         """Pending.
+        parallel_file = loader.get_parallel_file(template_name)
 
-#         Args:
-#             template_name (str): The parallel programming pattern name
-#                 from which we want a template.
-#             cafile_dict (dict): The neccesary data to render the template.
+        data = [
+            {
+                'name': template_name,
+                'ftype': template.file_type,
+                'text': raw_code
+            },
+            {
+                'name': parallel_file.file_name,
+                'ftype': parallel_file.file_type,
+                'text': parallel_file.source
+            }
+        ]
 
-#         Returns:
-#              dict: Data of the rendered template.
-#         """
-
-#         template = metadata.Template(template_name)
-#         cafile = metadata.Cafile(cafile_dict)
-
-#         data = {
-#             'name': template.file_name,
-#             'ftype': template.file_type,
-#             'text': template.render(cafile)
-#         }
-
-#         return data
-
-# class ParallelManager(object):
-
-#     def __init__(self):
-#         """A facade to access the ``metadata.Parallel`` class functionalities."""
-#         pass
-
-#     def get_template_info(self,template_name):
-#         """Returns the info of a parallel file.
-#         The basic info of a parallel file is the *name* of 
-#         the parallel proramming pattern an a *description*
-#         of the semantic of the same.
-
-#         Args:
-#             template_name (str): The name of the parallel programming
-#                 pattern template we request info.
-
-#         Returns:
-#             Dict containing the parallel file basic info.
-#         """
-
-#         parallel = metadata.Parallel(template_name)
-#         info = parallel.get_basic_info()
-
-#         return info
-
-#     def get_parallel_file_data(self,template_name):
-
-#         parallel = metadata.Parallel(template_name)
-        
-#         data = {
-#             'name': parallel.file_name,
-#             'ftype': parallel.file_type,
-#             'text': parallel.raw
-#         }
-
-#         return data
+        return data
