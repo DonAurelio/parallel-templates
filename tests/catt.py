@@ -44,12 +44,38 @@ def find_template_path():
     print('Path of stencil template')
     print(template_path)
 
+
+def list_template_dirs():
+    # Listing available templates
+    dirs = loader.list_template_dirs()
+    print('Templates dirs')
+    print(dirs)
+    return dirs
+
+
+def template_loader():
+    template = loader.get_template('stencil')
+    print('Loading a template with template laoder')
+    print('template source')
+    print(template.source)
+
+
+def parallel_file_loader():
+    parallel = loader.get_parallel_file('stencil')
+    print('parallel file of stencil template')
+    print('parallel file source')
+    print(parallel.source)
+
+
 if __name__ == '__main__':
 
     template_obj_creation()
     cafile_obj_creation()
     template_renderization()
     find_template_path()
+    template_loader()
+    parallel_file_loader()
+    list_template_dirs()
 
 
 

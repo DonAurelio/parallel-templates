@@ -15,10 +15,8 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_FILE_NAME = 'template.c'
 
-
-# Parallel File Settings
 PARALLEL_FILE_NAME = 'parallel.yml'
 
 # Cellular Automata Specification File Settings
 CAFILE_NAME = 'cafile.yml'
-CAFILE_PATH = os.path.join(BASE_DIR,TEMPLATES_DIR,CAFILE_NAME)
+CAFILE_DIR = os.path.join(BASE_DIR,TEMPLATES_DIR)

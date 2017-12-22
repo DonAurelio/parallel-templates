@@ -66,6 +66,46 @@ class Template(object):
     def file_type(self):
         return 'c99'
 
+    def to_dict(self):
+        data = {
+            'name': self.file_name,
+            'ftype': self.file_type,
+            'text': self.source
+        }
+
+        return data 
+
+
+class Parallel(object):
+
+    def __init__(self,parallel_string):
+
+        #: dict: The Cafile containing data.
+        self.data = yaml.load(parallel_string)
+        #: string: The raw cafile data in yaml format.
+        self.source = parallel_string
+
+    @property
+    def pattern_name(self):
+        return self.data.get('name','')
+
+    @property
+    def file_name(self):
+        return 'parallel.yml'
+
+    @property
+    def file_type(self):
+        return 'yml'
+
+    def to_dict(self):
+        data = {
+            'name': self.file_name,
+            'ftype': self.file_type,
+            'text': self.source
+        }
+
+        return data
+
 
 class Cafile(object):
 
@@ -102,28 +142,6 @@ class Cafile(object):
     def file_name(self):
         """Returns a name for a given cafile."""
         return 'cafile.yml'
-
-    @property
-    def file_type(self):
-        return 'c99'
-
-
-class Parallel(object):
-
-    def __init__(self,parallel_string):
-
-        #: dict: The Cafile containing data.
-        self.data = yaml.load(parallel_string)
-        #: string: The raw cafile data in yaml format.
-        self.source = parallel_string
-
-    @property
-    def pattern_name(self):
-        return self.data.get('name','')
-
-    @property
-    def file_name(self):
-        return 'parallel.yml'
 
     @property
     def file_type(self):
