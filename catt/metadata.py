@@ -10,6 +10,28 @@ import yaml
 import shutil
 import jinja2
 
+
+class SourceCodeFile(object):
+    
+    def __init__(self,name,ftype,text):
+
+        self._name = name
+        self._ftype = ftype
+        self._text = text
+
+    @property
+    def file_name(self):
+        return self._name
+
+    @property
+    def file_type(self):
+        return self._ftype
+
+    @property
+    def file_text(self):
+        return self._text
+
+
 class Template(object):
 
     def __init__(self,template_string,pattern_name='unnamed',origin='unknown'):
@@ -43,27 +65,28 @@ class Template(object):
 
     @property
     def file_name(self):
-        return self.pattern_name + '.c'
+        return 'template.c'
 
     @property
     def file_type(self):
-        return 'c99'
+        return 'template'
 
-    def render(self,cafile):
-        """Render the C99 Source Code Template given a Cafile instance.
-
-        Args:
-            cafile_obj (Cafile): The data that will be placed in the
-                C99 Source Code Template to generate a C99 Source Code.
-
-        Returns:
-            A raw string C99 Source Code.
-
-        """
+    def render(self,context):
+        """Returns a source code froma given template."""
         template = jinja2.Template(self.source)
-        source = template.render(cafile.data)
-  
-        return source
+        source = template.render(dict(context.data))
+
+        file_name = self.pattern_name + '.c'
+        file_type = 'c99'
+        file_text = source
+
+        source_code_file = SourceCodeFile(
+            file_name,
+            file_type,
+            file_text 
+        )
+
+        return source_code_file
 
 
 class Parallel(object):
@@ -92,41 +115,19 @@ class Parallel(object):
         return data
 
 
-class Cafile(object):
+class ContextFile(object):
 
-    def __init__(self,cafile_string):
-        """An interface to the cafile.yml file data.
-        A basic cafile data in YML format is depicted as follows,
-        basically a cafile specifies some properties needed to 
-        contruct a celular automata model in c99 source code.
-
-        Example:
-
-            lattice: 
-              rowdim: 20
-              coldim: 20
-              type: bool
-              neighborhood:
-                up: [-1,1]
-                down: [1,1]
-                left: [1,1]
-                right: [-1,-1]
-            generations: 20
-
-        Args:
-            cafile_string (str): A string containing cellular 
-                automata system settings.
-        """
+    def __init__(self,context_string):
 
         #: dict: The Cafile containing data.
-        self.data = yaml.load(cafile_string)
+        self.data = yaml.load(context_string)
         #: string: The raw cafile data in yaml format.
-        self.source = cafile_string
+        self.source = context_string
 
     @property
     def file_name(self):
         """Returns a name for a given cafile."""
-        return 'cafile.yml'
+        return 'context.yml'
 
     @property
     def file_type(self):

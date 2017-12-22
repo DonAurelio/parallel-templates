@@ -23,24 +23,25 @@ class TemplateManager(object):
         data = parallel_file.description()
         return data
 
-    def render_to_data(template_name,cafile_string):
+    def render_template_to_data(self,template_name,context_str):
+
 
         template = loader.get_template(template_name)
-        cafile =  metadata.Cafile(cafile_string)
-        raw_code = template.render(cafile)
+        context =  metadata.ContextFile(context_str)
 
-        parallel_file = loader.get_parallel_file(template_name)
+        source_code = template.render(context)
+        parallel = loader.get_parallel_file(template_name)
 
         data = [
             {
-                'name': template_name,
-                'ftype': template.file_type,
-                'text': raw_code
+                'name': source_code.file_name,
+                'ftype': source_code.file_type,
+                'text': source_code.file_text
             },
             {
-                'name': parallel_file.file_name,
-                'ftype': parallel_file.file_type,
-                'text': parallel_file.source
+                'name': parallel.file_name,
+                'ftype': parallel.file_type,
+                'text': parallel.source
             }
         ]
 

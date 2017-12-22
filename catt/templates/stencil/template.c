@@ -10,7 +10,7 @@
 
 struct Neighborhood
 {
-    {% for neighbor in lattice.neighborhood.keys %}
+    {% for neighbor in lattice.neighborhood.keys() %}
     {{ lattice.type }} {{ neighbor }};
     {% endfor %}
 };
@@ -33,7 +33,7 @@ void initialize({{ lattice.type }} * matrix)
 {{ lattice.type }} function(struct Neighborhood nbhd)
 {
     /* Defined Neighborhood
-    {% for key, value in lattice.neighborhood.items %}nbhd.{{ key }} {{ value }}; {% endfor%}    
+    {% for key, value in lattice.neighborhood.items() %}nbhd.{{ key }} {{ value }}; {% endfor%}    
     */ 
 
     // int sum = nbhd.c0 + nbhd.c2 + nbhd.c3 + nbhd.c4 + nbhd.c5 + nbhd.c6 + nbhd.c7 + nbhd.c8;
@@ -50,7 +50,7 @@ struct Neighborhood neighborhood(const {{ lattice.type }} * matrix, int i)
     int row = i / ColDim;
     int col = MOD(i,ColDim);
 
-    {% for key, value in lattice.neighborhood.items %}
+    {% for key, value in lattice.neighborhood.items() %}
     nbhd.{{ key }} = matrix[ MOD(row + ({{ value.0 }}),RowDim)*ColDim + MOD(col + ({{ value.1 }}),ColDim) ];
     {% endfor%}
 

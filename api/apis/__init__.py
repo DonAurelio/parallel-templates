@@ -3,11 +3,10 @@ from .template import template
 
 
 api = Api(
-    title='Catt Api',
+    title='C99 Parallel Template Api',
     version='1.0',
     description="""Provides a set of parallel programming 
-    templates for cellular automata programming in c99 source 
-    code which allow easy parallelization."""
+    templates for easy parallelization."""
 )
 
 # Adding template resource namesace to the API

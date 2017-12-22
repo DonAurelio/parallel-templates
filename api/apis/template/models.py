@@ -1,10 +1,9 @@
 from flask_restplus import  fields
 
 
-RAW_CAFILE = """
+RAW_CONTEXT_FILE = """
 # The fields described here are mandatory to serve as a context
 # to a cellular automata template.c
-pattern_name: stencil
 lattice: 
   rowdim: 20
   coldim: 20
@@ -17,10 +16,10 @@ lattice:
 generations: 20
 """
 
-cafile_model = {
+context_model = {
     'name': fields.String(
         required=True,
-        default='cafile.yml',
+        default='context.yml',
         description="name of file"
     ),
     'ftype': fields.String(
@@ -30,7 +29,7 @@ cafile_model = {
     ),
     'text': fields.String(
         required=True,
-        default=RAW_CAFILE,
-        description="Cellular automata specification"
+        default=RAW_CONTEXT_FILE,
+        description="A context for the parallel programming template"
     ),
 }

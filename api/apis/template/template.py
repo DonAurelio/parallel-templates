@@ -7,11 +7,13 @@ from . import models
 
 
 # Defining the name space for templates resuce.
-api = Namespace('templates',description='Allows to obtain information of the available templates.')
+api = Namespace(
+    'templates',
+    description='Allows to obtain information about available parallel programing c99 templates.')
 
 
 # Defining cafile model
-cafile = api.model('Cafile',models.cafile_model)
+context = api.model('Context',models.context_model)
 
 
 @api.route('')
@@ -41,14 +43,13 @@ class TemplateDetail(Resource):
 
         return data
 
-    @api.expect(cafile)
+    @api.expect(context)
     def post(self,name):
         """Returns c99 source code give a cafile metadata."""
 
-        cafile_data = request.get_json()
-        raw_cafile = cafile_data.get('text','')
-        
+        context = request.get_json()
+        context_text = context.get('text','')
         manager = TemplateManager()
-        data = manager.render_to_data(name,raw_cafile)
+        data = manager.render_template_to_data(name,context_text)
 
         return data

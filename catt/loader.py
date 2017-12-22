@@ -9,12 +9,6 @@ from . import metadata
 
 
 def find_template_path(template_name):
-    """Return the path to the  given template directory.
-    
-    Args:
-        template_name (str): the name of the folder 
-            we are looking for.
-    """
     
     template_path = None
     for templates_dir in settings.TEMPLATE_DIRS:
@@ -25,7 +19,7 @@ def find_template_path(template_name):
 
 
 def list_template_dirs():
-    """Return a list of template directorires."""
+
 
     dirs = []
     for templates_dir in settings.TEMPLATE_DIRS:
@@ -38,7 +32,7 @@ def list_template_dirs():
 
 
 def get_template(template_dir):
-    """Return a template object from the given template directory."""
+
 
     path = find_template_path(template_dir)
     file_name = settings.TEMPLATE_FILE_NAME
@@ -46,12 +40,11 @@ def get_template(template_dir):
 
     with open(file_path,'r') as file:
         template_raw = file.read()
-        template = metadata.Template(template_raw)
+        template = metadata.Template(template_raw,pattern_name=template_dir)
         return template
 
 
 def get_parallel_file(template_dir):
-    """Return a parallel object from the given template directory."""
 
     path = find_template_path(template_dir)
     file_name = settings.PARALLEL_FILE_NAME
