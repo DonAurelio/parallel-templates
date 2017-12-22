@@ -31,6 +31,5 @@ def render_to_string(template_name,context):
     pass
 
 
-
 def from_string(self, template_code):
     pass
