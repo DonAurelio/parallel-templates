@@ -6,7 +6,8 @@ from pprint import pprint
 # To include the pragcc module in the python path
 sys.path[0:0] = ['.', '..']
 
-from catt.core import metadata
+from catt import metadata
+from catt import loader
 from . import data
 
 def template_obj_creation():
@@ -36,11 +37,19 @@ def template_renderization():
     print('Template Renderization')
     print(rendered)
 
+
+def find_template_path():
+    # Looking for templates in the templates directories
+    template_path = loader.find_template_path('stencil')
+    print('Path of stencil template')
+    print(template_path)
+
 if __name__ == '__main__':
 
     template_obj_creation()
     cafile_obj_creation()
     template_renderization()
+    find_template_path()
 
 
 
