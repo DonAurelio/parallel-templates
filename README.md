@@ -60,9 +60,9 @@ The application expose the following endpoints to interact with.
 
 | HTTP Method | URI | Action |
 |---|---|---|
-| GET | http://[hostname]/parallel_templates | Retrieve list of templates |
-| GET | http://[hostname]/parallel_templates/[template_name] | Retrieve a template detail |
-| POST | http://[hostname]/parallel_templates/[template_name] | Render a template |
+| GET | http://[hostname]/templates | Retrieve list of templates |
+| GET | http://[hostname]/templates/[template_name] | Retrieve a template detail |
+| POST | http://[hostname]/templates/[template_name] | Render a template |
 
 ## Deployment with Docker
 
