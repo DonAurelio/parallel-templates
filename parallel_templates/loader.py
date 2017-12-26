@@ -10,7 +10,7 @@ from . import metadata
 
 def find_template_path(template_name):
     
-    template_path = None
+    template_path = ''
     for templates_dir in settings.TEMPLATE_DIRS:
         if template_name in os.listdir(templates_dir):
             template_path = os.path.join(templates_dir,template_name)
@@ -19,6 +19,7 @@ def find_template_path(template_name):
 
 
 def list_template_dirs():
+    """List directories containnig parallel programming templates."""
 
 
     dirs = []
@@ -33,15 +34,19 @@ def list_template_dirs():
 
 def get_template(template_dir):
 
-
     path = find_template_path(template_dir)
     file_name = settings.TEMPLATE_FILE_NAME
     file_path = os.path.join(path,file_name)
 
-    with open(file_path,'r') as file:
-        template_raw = file.read()
-        template = metadata.Template(template_raw,pattern_name=template_dir)
-        return template
+    template = None
+    # If the template_dir is founded path will have a valid value,
+    # so the template is loaded, otherwise, a None value is returned
+    if path:
+        with open(file_path,'r') as file:
+            template_raw = file.read()
+            template = metadata.Template(template_raw,pattern_name=template_dir)
+            
+    return template
 
 
 def get_parallel_file(template_dir):
@@ -50,7 +55,10 @@ def get_parallel_file(template_dir):
     file_name = settings.PARALLEL_FILE_NAME
     file_path = os.path.join(path,file_name)
 
-    with open(file_path,'r') as file:
-        parallel_file_raw = file.read()
-        parallel = metadata.Parallel(parallel_file_raw)
-        return parallel
+    parallel = None
+    if path:
+        with open(file_path,'r') as file:
+            parallel_file_raw = file.read()
+            parallel = metadata.Parallel(parallel_file_raw)
+    
+    return parallel
