@@ -45,7 +45,7 @@ one of the implemented templates follows the stencil parallel programming patter
 python3 -m unittest tests.parallel_templates_loader
 ```
 
-##### Play with the API
+#### Play with the API
 
 This tool has an API to interact with the templates available in the application, at the moment it only has the template of the stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/). To run a API install requirements and run the application as follows:
 
@@ -54,7 +54,7 @@ pip3 install -r ./api/requirements.txt
 python3 api/app.py
 ```
 
-###### API Enpoints
+#### API Enpoints
 
 The application expose the following endpoints to interact with.
 
