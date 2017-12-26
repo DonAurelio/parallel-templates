@@ -39,16 +39,13 @@ It is a metadata file in YAML format which contains values for the variables def
 
 one of the implemented templates follows the stencil parallel programming pattern.  -->
 
-# Tests
-
-
-## Running paralle_template modules tests
+## Tests
 
 ```bash
 python3 -m unittest tests.parallel_templates_loader
 ```
 
-## Play with the API
+##### Play with the API
 
 This tool has an API to interact with the templates available in the application, at the moment it only has the template of the stencil parallel programming pattern. However, you can contribute to the growth of these. the Api was made with [Flask Restplus](https://flask-restplus.readthedocs.io/en/stable/). To run a API install requirements and run the application as follows:
 
@@ -57,7 +54,7 @@ pip3 install -r ./api/requirements.txt
 python3 api/app.py
 ```
 
-### API Enpoints
+###### API Enpoints
 
 The application expose the following endpoints to interact with.
 
@@ -67,7 +64,7 @@ The application expose the following endpoints to interact with.
 | GET | http://[hostname]/templates/[template_name] | Retrieve a template detail |
 | POST | http://[hostname]/templates/[template_name] | Render a template |
 
-# Deployment with Docker
+## Deployment with Docker
 
 Perform the following commands to build the **catt** image, then to run the **catt** API in a container. These command need to be 
 performed form the catt project root directory.
@@ -77,7 +74,7 @@ docker build -t catt .
 docker run -d -v ${PWD}:/usr/src/app --name catt -p 5000:5000 catt
 ```
 
-# References
+## References
 
 [Structured Parallel Programming: Patterns for Efficient Computation](https://www.amazon.com/Structured-Parallel-Programming-Efficient-Computation/dp/0124159931)
 
