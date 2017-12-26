@@ -2,7 +2,7 @@
 
 It is a set of templates of parallel programming patterns in C (for High Performance Compiting). For example: **stencil** to programing differential equation solvers and cellular automatas; **map** to replicate an operation or function over a collection, bettwen other parallel programing patterns. 
 
-Each template in C consists of 3 files: **template.c**, **parallel.yml** and **context.yml**
+Each template consists of 3 files: **template.c**, **parallel.yml** and **context.yml**
 
 ```bash
 parallel-templates
@@ -60,18 +60,18 @@ The application expose the following endpoints to interact with.
 
 | HTTP Method | URI | Action |
 |---|---|---|
-| GET | http://[hostname]/templates | Retrieve list of templates |
-| GET | http://[hostname]/templates/[template_name] | Retrieve a template detail |
-| POST | http://[hostname]/templates/[template_name] | Render a template |
+| GET | http://[hostname]/parallel_templates | Retrieve list of templates |
+| GET | http://[hostname]/parallel_templates/[template_name] | Retrieve a template detail |
+| POST | http://[hostname]/parallel_templates/[template_name] | Render a template |
 
 ## Deployment with Docker
 
-Perform the following commands to build the **catt** image, then to run the **catt** API in a container. These command need to be 
-performed form the catt project root directory.
+Perform the following commands to build the **parallel_templates** image, then to run the **parallel_templates** API in a container. These command need to be 
+performed from the project root directory.
 
 ```sh
-docker build -t catt .
-docker run -d -v ${PWD}:/usr/src/app --name catt -p 5000:5000 catt
+docker build -t parallel_templates .
+docker run -d -v ${PWD}:/usr/src/app --name parallel_templates -p 5000:5000 parallel_templates
 ```
 
 ## References
@@ -79,6 +79,8 @@ docker run -d -v ${PWD}:/usr/src/app --name catt -p 5000:5000 catt
 [Structured Parallel Programming: Patterns for Efficient Computation](https://www.amazon.com/Structured-Parallel-Programming-Efficient-Computation/dp/0124159931)
 
 [Designing a RESTful API using Flask-RESTful](https://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful)
+
+[REST API response format using HTTP status codes](https://github.com/adnan-kamili/rest-api-response-format)
 
 [Flask-RESTful](http://flask-restful.readthedocs.io/en/latest/)
 

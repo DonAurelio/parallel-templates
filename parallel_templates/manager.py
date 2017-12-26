@@ -18,31 +18,36 @@ class TemplateManager(object):
 
     def get_template_detail(self,template_name):
 
-        # Template info is described in the parallel.yml metadata
+        # Template info is described in the parallel.yml metadata file
         parallel_file = loader.get_parallel_file(template_name)
-        data = parallel_file.description()
+
+        data = None
+        if parallel_file:
+            data = parallel_file.description()
+        
         return data
 
     def render_template_to_data(self,template_name,context_str):
 
-
         template = loader.get_template(template_name)
-        context =  metadata.ContextFile(context_str)
-
-        source_code = template.render(context)
         parallel = loader.get_parallel_file(template_name)
 
-        data = [
-            {
-                'name': source_code.file_name,
-                'ftype': source_code.file_type,
-                'text': source_code.file_text
-            },
-            {
-                'name': parallel.file_name,
-                'ftype': parallel.file_type,
-                'text': parallel.source
-            }
-        ]
+        data = None
+        if template and parallel:
+            context =  metadata.ContextFile(context_str)
+            source_code = template.render(context)
+
+            data = [
+                {
+                    'name': source_code.file_name,
+                    'ftype': source_code.file_type,
+                    'text': source_code.file_text
+                },
+                {
+                    'name': parallel.file_name,
+                    'ftype': parallel.file_type,
+                    'text': parallel.source
+                }
+            ]
 
         return data

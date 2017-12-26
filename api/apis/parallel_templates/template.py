@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Namespace, Resource
 
-from catt.manager import TemplateManager
+from parallel_templates.manager import TemplateManager
 
 from . import models
 
@@ -41,6 +41,9 @@ class TemplateDetail(Resource):
         manager = TemplateManager()
         data = manager.get_template_detail(name)
 
+        if not data:
+            return {'message':"The template '%s' does not exist" % name}, 404
+
         return data
 
     @api.expect(context)
@@ -51,5 +54,8 @@ class TemplateDetail(Resource):
         context_text = context.get('text','')
         manager = TemplateManager()
         data = manager.render_template_to_data(name,context_text)
+
+        if not data:
+            return {'message':"The template '%s' does not exist" % name}, 404
 
         return data
