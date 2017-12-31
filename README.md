@@ -73,6 +73,12 @@ performed from the project root directory.
 docker build -t parallel_templates .
 docker run -d -v ${PWD}:/usr/src/app --name parallel_templates -p 5000:5000 parallel_templates
 ```
+<!-- 
+## Todo
+
+* Una funcionalidad en manager que termita checkear si un template puede ser renderizado con su contexto apropiadamente.
+
+* Una funcionalidad que permita verificar que todos los templates pueden ser renderizados con su contexto de ejemplo correctamente. -->
 
 ## References
 
