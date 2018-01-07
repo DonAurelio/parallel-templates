@@ -149,6 +149,9 @@ int main(int argc, char const **argv)
 
 """
 
+RAW_EMPTY_TEMPLATE = """
+"""
+
 
 RAW_CAFILE = """
 pattern_name: stencil

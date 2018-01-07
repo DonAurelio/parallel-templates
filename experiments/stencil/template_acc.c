@@ -81,22 +81,30 @@ void evolve({{ lattice.type }} ** in){
         out[i] = ({{ lattice.type }} *) malloc(ColDim*sizeof({{ lattice.type }}));
     }
 
+    #pragma acc data copy(in[0:RowDim][0:ColDim]), create(out[0:RowDim][0:ColDim]) 
+    {
+
         for (int g = 1; g <= Generations; ++g){
-         
+
+            #pragma acc parallel loop vector_length(ColDim) num_gangs(RowDim) gang 
             for (int i = 0; i < RowDim; ++i){
+                #pragma acc loop vector
                 for (int j = 0; j < ColDim; ++j){
                     struct Neighborhood nbhd = neighborhood(in,i,j);
                     out[i][j] = function(nbhd);
                 }
             }
 
+            #pragma acc parallel loop 
             for (int i = 0; i < RowDim; ++i){
+                #pragma acc loop
                 for (int j = 0; j < ColDim; ++j){
                     in[i][j] = out[i][j];
                 }
             }
         }
 
+    }
 
     for (int i=0; i<RowDim; ++i) free(out[i]);
     free(out);
@@ -104,10 +112,12 @@ void evolve({{ lattice.type }} ** in){
 
 void check({{ lattice.type }} ** in){
    
+
 }
 
 int main(int argc, char const **argv)
 {
+
     /* -- Initialization -- */
     {{ lattice.type }} ** in = ({{ lattice.type }} **) malloc(RowDim*sizeof( {{ lattice.type }} *));
 
