@@ -1,5 +1,7 @@
 # Parallel Templates
 
+[![Build Status](https://travis-ci.org/DonAurelio/parallel-templates.svg?branch=master)](https://travis-ci.org/DonAurelio/parallel-templates)
+
 It is a set of templates of parallel programming patterns in C (for High Performance Compiting). For example: **stencil** to programing differential equation solvers and cellular automatas; **map** to replicate an operation or function over a collection, bettwen other parallel programing patterns. 
 
 Each template consists of 3 files: **template.c**, **parallel.yml** and **context.yml**
