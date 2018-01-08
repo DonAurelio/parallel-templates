@@ -82,7 +82,7 @@ def get_context_file(template_dir):
 
 
 def get_makefile(template_dir):
-   """Return a Makefile instance given a template dir name."""
+    """Return a Makefile instance given a template dir name."""
 
     path = find_template_path(template_dir)
     file_name = settings.MAKEFILE_FILE_NAME
