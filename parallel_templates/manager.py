@@ -34,7 +34,7 @@ class TemplateManager(object):
 
         data = None
         if template and parallel:
-            context =  metadata.ContextFile(context_str)
+            context =  metadata.Context(context_str)
             source_code = template.render(context)
 
             data = [

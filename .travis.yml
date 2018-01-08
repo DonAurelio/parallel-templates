@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.5"
+# command to install dependencie
+install:
+  - pip3 install -r parallel_templates/requirements.txt
+# command to run tests
+script:
+  - python3 -m unittest tests/loader.py
+  - python3 -m unittest tests/templates.py 

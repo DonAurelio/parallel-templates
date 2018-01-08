@@ -1,6 +1,6 @@
 """
-Allows to find files of a determined template and returns a object 
-in Python that represents that file.
+Allows to find files of a determined template and returns
+an object which represents the given file.
 """
 
 import os
@@ -9,6 +9,7 @@ from . import metadata
 
 
 def find_template_path(template_name):
+    """Return the path to the template with the given template_name."""
     
     template_path = ''
     for templates_dir in settings.TEMPLATE_DIRS:
@@ -19,8 +20,7 @@ def find_template_path(template_name):
 
 
 def list_template_dirs():
-    """List directories containnig parallel programming templates."""
-
+    """List names of directories containnig parallel programming templates."""
 
     dirs = []
     for templates_dir in settings.TEMPLATE_DIRS:
@@ -33,6 +33,7 @@ def list_template_dirs():
 
 
 def get_template(template_dir):
+    """Return a template object given a template dir name."""
 
     path = find_template_path(template_dir)
     file_name = settings.TEMPLATE_FILE_NAME
@@ -50,6 +51,7 @@ def get_template(template_dir):
 
 
 def get_parallel_file(template_dir):
+    """Return a Parallel instance given a template dir name."""
 
     path = find_template_path(template_dir)
     file_name = settings.PARALLEL_FILE_NAME
@@ -62,3 +64,34 @@ def get_parallel_file(template_dir):
             parallel = metadata.Parallel(parallel_file_raw)
     
     return parallel
+
+def get_context_file(template_dir):
+    """Return a Context instance given a template dir name."""
+
+    path = find_template_path(template_dir)
+    file_name = settings.CONTEXT_FILE_NAME
+    file_path = os.path.join(path,file_name)
+
+    context = None
+    if path:
+        with open(file_path,'r') as file:
+            context_str = file.read()
+            context = metadata.Context(context_str)
+
+    return context
+
+
+def get_makefile(template_dir):
+   """Return a Makefile instance given a template dir name."""
+
+    path = find_template_path(template_dir)
+    file_name = settings.MAKEFILE_FILE_NAME
+    file_path = os.path.join(path,file_name)
+
+    makefile = None
+    if path:
+        with open(file_path,'r') as file:
+            makefile_str = file.read()
+            makefile = metadata.Makefile(makefile_str)
+
+    return makefile
