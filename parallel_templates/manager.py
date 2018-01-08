@@ -31,9 +31,10 @@ class TemplateManager(object):
 
         template = loader.get_template(template_name)
         parallel = loader.get_parallel_file(template_name)
+        makefile = loader.get_makefile(template_name)
 
         data = None
-        if template and parallel:
+        if template and parallel and makefile:
             context =  metadata.Context(context_str)
             source_code = template.render(context)
 
@@ -47,7 +48,13 @@ class TemplateManager(object):
                     'name': parallel.file_name,
                     'ftype': parallel.file_type,
                     'text': parallel.source
-                }
+                },
+                {
+                    'name': makefile.file_name,
+                    'ftype': makefile.file_type,
+                    'text': makefile.source
+                },
+
             ]
 
         return data

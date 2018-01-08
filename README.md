@@ -69,7 +69,7 @@ The API can run inside a Docker Container. To get it done, perform the following
 
 ```sh
 docker build -t templates .
-docker run -d -v ${PWD}:/usr/src/app --name templates -p 5000:5000 templates
+docker run --rm -d -v ${PWD}:/usr/src/app -p 5001:5000 templates python3 api/app.py
 ```
 
 
