@@ -2,8 +2,11 @@
 #include <stdio.h>  /* Standard I/O Library: printf */
 #include <stdlib.h> /* Standard Library: malloc, calloc, free, ralloc */
 
-#define MOD(a,b) ((((a)%(b))+(b))%(b))
 
+/**
+ * Used in the 'neighborhood' function.
+ */
+#define MOD(a,b) ((((a)%(b))+(b))%(b))
 
 #ifndef Generations
 #define Generations {{ generations }}
@@ -18,6 +21,9 @@
 #endif
 
 
+/**
+ * Represents the neighborhood of a given cell.
+ */
 struct Neighborhood
 {
     {% for neighbor in lattice.neighborhood.keys() %}
@@ -26,10 +32,20 @@ struct Neighborhood
 
 };
 
-void initialize({{ lattice.type }} ** matrix){
 
+/**
+ * Used for cellular space initialization.
+ */
+void initialize({{ lattice.type }} ** matrix){
+    // place cellular space initialization code here ...
 }
 
+
+/**
+ * Returns the neighborhood of a given cell in the cellular space.
+ * A periodic boundary condition is considered. If another type
+ * of neighborhood is required, you must modify this function.
+ */
 struct Neighborhood neighborhood({{ lattice.type }} ** matrix, int row, int col){
     struct Neighborhood nbhd;
 
@@ -40,77 +56,78 @@ struct Neighborhood neighborhood({{ lattice.type }} ** matrix, int row, int col)
     return nbhd;
 }
 
+
+/**
+ * Elemental function.
+ * Returns the new state of a cell given its neighborhood.
+ * This function is applied to each element in the celular space.
+ */
 {{ lattice.type }} function(struct Neighborhood nbhd){
     
-    int sum = nbhd.left_up + nbhd.up + nbhd.right_up + nbhd.left + nbhd.right + nbhd.left_down + nbhd.down + nbhd.right_down;
-    int site = nbhd.center;
-    int life = ( site == 1 ) ? ( sum == 2 || sum == 3 ) ? 1:0 : ( sum == 3 ) ? 1:0;
+    // place the code here ...
 
-    return life;
+    // you need to return the new state
+    // return 0;
 }
 
-void see({{ lattice.type }} ** matrix){
-    printf("\n");
-    int i = 0;
-    for (i=0; i<RowDim; ++i){
-        int j = 0;
-        for (j=0; j<ColDim; ++j){
-            if(matrix[i][j] == 0)
-                printf(" \t");
-            else
-                printf("%d\t",matrix[i][j]);
-        } 
-        printf("\n");
-    }
-    printf("\n");
-}
 
-void save({{ lattice.type }} ** matrix, const char * name){
-    FILE * pf = fopen(name,"w");
-    for (int i=0; i<RowDim; ++i){
-        for (int j=0; j<ColDim; ++j) fprintf(pf, "%d\t", matrix[i][j]);
-        fprintf(pf, "\n");
-    }
-    fclose(pf);
-}
 
+/**
+ * It is responsible for the evolution of the system.
+ * Note: This function should not be modified.
+ */
 void evolve({{ lattice.type }} ** in){
 
     {{ lattice.type }} ** out = ({{ lattice.type }} **) malloc(RowDim*sizeof( {{ lattice.type }} *));
+
+    /* checking if there is enough memory space to create the celular space */
+    if( out == NULL ){
+        perror("Not Enough Memory\n");
+        exit(-1);
+    }
 
     for (int i=0; i<RowDim; ++i){ 
         out[i] = ({{ lattice.type }} *) malloc(ColDim*sizeof({{ lattice.type }}));
     }
 
-        for (int g = 1; g <= Generations; ++g){
-         
-            for (int i = 0; i < RowDim; ++i){
-                for (int j = 0; j < ColDim; ++j){
-                    struct Neighborhood nbhd = neighborhood(in,i,j);
-                    out[i][j] = function(nbhd);
-                }
-            }
-
-            for (int i = 0; i < RowDim; ++i){
-                for (int j = 0; j < ColDim; ++j){
-                    in[i][j] = out[i][j];
-                }
+    /* cellular space processing */
+    for (int g = 1; g <= Generations; ++g){
+     
+        for (int i = 0; i < RowDim; ++i){
+            for (int j = 0; j < ColDim; ++j){
+                struct Neighborhood nbhd = neighborhood(in,i,j);
+                out[i][j] = function(nbhd);
             }
         }
+
+        for (int i = 0; i < RowDim; ++i){
+            for (int j = 0; j < ColDim; ++j){
+                in[i][j] = out[i][j];
+            }
+        }
+    }
 
 
     for (int i=0; i<RowDim; ++i) free(out[i]);
     free(out);
 }
 
-void check({{ lattice.type }} ** in){
-   
-}
 
+/**
+ * Main function.
+ * Note: This function should not be modified.
+ */
 int main(int argc, char const **argv)
 {
-    /* -- Initialization -- */
+
+    /* allocate memory for the celular space */
     {{ lattice.type }} ** in = ({{ lattice.type }} **) malloc(RowDim*sizeof( {{ lattice.type }} *));
+
+    /* checking if there is enough memory space to create the celular space */
+    if( in == NULL ){
+        perror("Not Enough Memory\n");
+        exit(-1);
+    }
 
     for (int i=0; i<RowDim; ++i){ 
         in[i] = ({{ lattice.type }} *) malloc(ColDim*sizeof({{ lattice.type }}));
@@ -120,7 +137,7 @@ int main(int argc, char const **argv)
     evolve(in);
     check(in);
 
-    /* -- Releasing resources -- */
+    /* releasing resources */
     for (int i=0; i<RowDim; ++i) free(in[i]);
     free(in);
 
