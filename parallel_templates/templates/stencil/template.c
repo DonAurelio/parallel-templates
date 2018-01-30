@@ -135,7 +135,6 @@ int main(int argc, char const **argv)
 
     initialize(in);
     evolve(in);
-    check(in);
 
     /* releasing resources */
     for (int i=0; i<RowDim; ++i) free(in[i]);
