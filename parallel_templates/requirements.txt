@@ -1,4 +1,4 @@
-Django==1.11.4
+Django==1.11.29
 Jinja2==2.10
 pyaml==17.8.0
 PyYAML==3.12
